@@ -1,0 +1,70 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: zigbee
+  namespace: zigbee
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: zigbee
+  template:
+    metadata:
+      labels:
+        name: zigbee
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: cluster.dissi.me/zigbee
+                operator: In
+                values:
+                - "true"
+      containers:
+        - name: zigbee
+          image: koenkk/zigbee2mqtt:1.22.2
+          livenessProbe:
+            failureThreshold: 12
+            httpGet:
+              httpHeaders:
+                - name: Accept
+                  value: text/plain
+              path: /health
+              port: http
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 2
+          ports:
+            - containerPort: 8080
+              name: http
+              protocol: TCP
+          resources:
+            requests:
+              cpu: '1'
+              memory: 400Mi
+          securityContext:
+            allowPrivilegeEscalation: true
+            privileged: true
+          volumeMounts:
+            - name: zigbeeusb
+              mountPath: /dev/ttyUSB0
+            - name: config
+              mountPath: /app/data
+              subPath: zigbee
+            - mountPath: /run/udev
+              name: devices
+      volumes:
+        - name: devices
+          hostPath:
+            path: /run/udev
+        - name: zigbeeusb
+          hostPath:
+            path: /dev/ttyUSB0
+            type: CharDevice
+        - name: config
+          persistentVolumeClaim:
+            claimName: nas-config-zigbee
+          

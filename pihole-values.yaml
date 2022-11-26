@@ -1,0 +1,53 @@
+# https://artifacthub.io/packages/helm/mojo2600/pihole
+serviceWeb:
+  https:
+    enabled: false
+
+serviceDns:
+  type: LoadBalancer
+  loadBalancerIP: 192.168.2.153
+  annotations:
+    metallb.universe.tf/allow-shared-ip: pihole-svc
+
+
+ingress:
+  enabled: true
+  hosts:
+    - dns.dissi.me
+
+adminPassword: #
+
+replicaCount: 1
+serviceDhcp:
+  enabled: false
+persistentVolumeClaim:
+  enabled: true
+  accessModes:
+    - ReadWriteMany
+
+affinity:
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+        - matchExpressions:
+          - key: "kubernetes.io/os"
+            operator: In
+            values:
+            - linux
+
+
+# -- Probes configuration
+probes:
+  # -- probes.liveness -- Configure the healthcheck for the ingress controller
+  liveness:
+    # -- Generate a liveness probe
+    enabled: true
+    initialDelaySeconds: 1
+    failureThreshold: 20
+    timeoutSeconds: 5
+  readiness:
+    # -- Generate a readiness probe
+    enabled: true
+    initialDelaySeconds: 1
+    failureThreshold: 20
+    timeoutSeconds: 5

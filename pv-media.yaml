@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nasbox-nfs-pv-media
+spec:
+  capacity:
+    storage: 1260Gi 
+  volumeMode: Filesystem
+  storageClassName: nfs-media
+  accessModes:
+    - ReadWriteMany 
+  persistentVolumeReclaimPolicy: Retain
+  mountOptions:
+    - hard
+  nfs: 
+    path: /volume4/data
+    server: 192.168.2.100
+    readOnly: false
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: nas-media
+spec:
+  storageClassName: nfs-media
+  accessModes:
+    - "ReadWriteMany"
+  resources:
+    requests:
+      storage: "1000Gi"

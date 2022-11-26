@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nasbox-nfs-pv-influx
+spec:
+  capacity:
+    storage: 1260Gi 
+  volumeMode: Filesystem
+  storageClassName: nfs-influx
+  accessModes:
+    - ReadWriteMany 
+  persistentVolumeReclaimPolicy: Retain
+  mountOptions:
+    - hard
+  nfs: 
+    path: /volume3/containerstorage/home/influx
+    server: 192.168.2.100
+    readOnly: false
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: nfs-influx
+spec:
+  storageClassName: nfs-influx
+  accessModes:
+    - "ReadWriteMany"
+  resources:
+    requests:
+      storage: "10Gi"

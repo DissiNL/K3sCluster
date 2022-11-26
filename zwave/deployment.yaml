@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: zwave
+  namespace: zwave
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: zwave
+  template:
+    metadata:
+      labels:
+        name: zwave
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: cluster.dissi.me/zwave
+                operator: In
+                values:
+                - "true"
+      containers:
+        - name: zwave
+          image: zwavejs/zwavejs2mqtt:latest
+          livenessProbe:
+            failureThreshold: 12
+            httpGet:
+              httpHeaders:
+                - name: Accept
+                  value: text/plain
+              path: /health
+              port: http
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 2
+          ports:
+            - containerPort: 8091
+              name: http
+              protocol: TCP
+            - containerPort: 3000
+              name: websocket
+              protocol: TCP
+          resources:
+            requests:
+              cpu: '1'
+              memory: 400Mi
+          securityContext:
+            allowPrivilegeEscalation: true
+            privileged: true
+          volumeMounts:
+            - mountPath: /dev/ttyUSB1
+              name: zwavehat
+            - mountPath: /usr/src/app/store
+              name: data
+      volumes:
+        - name: zwavehat
+          hostPath:
+            path: /dev/ttyUSB1
+            type: CharDevice
+        - name: data
+          hostPath:
+            path: /zwave/data

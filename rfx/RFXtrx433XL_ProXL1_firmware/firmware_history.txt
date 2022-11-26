@@ -1,0 +1,158 @@
+Important notes:
+=============================================================================================
+=            !!!!!!  USE RFXflash TO FLASH THE RFXtrx433XL   !!!!!!                         =
+=  We have received several problem calls of a frozen RFXtrx433XL when flashed in Domoticz. =
+=============================================================================================
+
+ProXL1 and ProXL2 firmware will only operate in an RFXtrx433XL and cannot be used in an RFXtrx433 or RFXtrx433E!
+Ext, Ext2, Pro1 and Pro2 firmware will only operate in an RFXtrx433E and cannot be used in an RFXtrx433!
+Type1 and Type2 firmware will operate in the RFXtrx433 and RFXtrx433E.
+The preferred firmware for the RFXtrx433E is Pro1.
+The preferred firmware for the RFXtrx433XL is ProXL1.
+Check chapter 2 in the RFXtrx User Guide for the list of supported protocols.
+
+You only have to flash the latest firmware version.
+The previous version is only present to enable you to go back in case of troubles.
+
+
+
+RFXtrx433E Pro1, Pro2, ProXL1 and ProXL2 firmware change history:
+============================================================
+FW release 433_1044 18-05-2021
+    LucciAir DC speed 1 to 6 added
+    Bresser 3ch 7009981, 7009994 added in ProXL1 and ProXL2
+    Ozroll E-Trans added in ProXL2
+    TFA 30.3233.1 rain sensor added in Pro2, ProXL1 and ProXL2
+    1byOne QH A19 rev10 chime added in ProXL1 and ProXL2
+
+FW release 433_1043 04-03-2020
+    receive undec MDremote
+    Mertik G6R-H4TD (DRU) run-up and run-down added
+    MCZ receive improved
+    Globaltronics GT-WT-01 added in XL
+    Cherubini blinds added in XL
+    Bresser sensor added
+
+FW release 433_1042 11-01-2020
+    Marquant improved
+    Suppress multiple Lighting4 packets improved
+    TFA 30.3233.01 added Pro2 & ProXL1
+    Risingsun added to Pro1 firmware
+    BlindsT17 - Gaposa added to ProXL1 firmware
+
+FW release 433_SpecialFunkbus_1042 10-10-2019
+    Use this version only to control Funkbus with Anslut commands.
+    See chapter 12 in the RFXtrx User Guide.
+
+FW release 433_1041 19-08-2019
+    P1 corrected in ProXL1
+    BlindsT6 Light receive added
+
+FW release 433_1040 12-08-2019
+    THN132N improved
+    Prego, Froggit sauna sensors updated
+    Siemens SF01 corrected
+    WSD10 detection updated
+    P1 & Teleinfo updated
+    FineOffset/WS1200 improved
+    Digimax temperature corrected
+    REAX corrected in Pro2
+    Siemens SF01 corrected
+    Light added to BlindsT6
+    Hunter Fan added
+    Novy extractor hood added
+
+FW release 433_1039 03-05-2019
+    Digoo DG-R8S improved
+    MDremotes added in XL
+    Temperature correction implemented for BTHGN129
+    Imagintronics/Opus corrected
+    New type WS1200 added
+    WS1200 moved to FineOffset
+    RM174RF/RM175RF transmit added
+    Kerui K16 panel added
+
+FW release 433_1038 26-03-2019
+    Meiantech/Atlantic updated
+    Digoo DG-R8S added
+    BlindsT15 Motostar added
+
+FW release 433_1037 05-03-2019
+    Rubicson updated
+    Imagintronics/Opus moved to Fineoffset
+    Mertik G6R-H4TD for RFXtrx315E corrected
+    mi.sol WH25 added
+    Prego, Froggit sauna sensors added
+
+FW release 433_1036 19-02-2019
+    Alfawise, dBell added in XL
+    Homeconfort receive added in XL
+    Siemens SF01 receive added in XL
+    A-OK Ematronic receive corrected
+    Auriol H13726,EWS1500,W155,W160 corrected
+
+FW release 433_1035 08-02-2019
+    Meiantech enable supported
+    Byron BY added
+    Envivo receive added in XL
+    Lighting4 improved
+    Oregon/CM113 improved
+    Oregon 1.0 updated
+    Kerui improved
+    Kerui CO/gas/shock sensor decoded as motion sensor
+    THGR221 added
+    AC receive improved for AWST6000
+    WSD10 corrected
+    Auriol H13726 corrected
+    Xiron updated
+    RFXtrx433XL - Legrand CAD added
+
+FW release 433_1034 05-12-2018
+    ProXL1 BlindsT0 receive updated
+
+FW release 433_1033 04-12-2018
+    Copy RFY device enabled
+
+FW release 433_1032 22-11-2018
+    Revolt added in XL
+    Mertik G6R-H4TB/H4T/H4T21-Z22/H4TD/H4T16 added
+    P1 Smart Meter report interval limited to 10 seconds
+    Suppress multiple Chime and Visonic commands for 2 seconds
+    Async response message updated
+    Imagintronix updated
+    X10 receive improved
+    Conrad RSL improved
+    Livolo improved
+    FineOffset improved
+
+FW release 433_1031 20-10-2018
+    ProXL1 - transmit corrected
+    Mertik corrected
+
+FW release 433_1030 14-10-2018
+    ProXL1 - receive after Somfy transmit corrected
+
+FW release 433_1029 12-10-2018
+    SelectPlus updated
+    Mertik corrected
+    Receive Mertik G6R-H3T1 added
+    HomeConfort corrected
+    Rubicson updated
+    ProXL1 Async P1 - DSMR receive updated
+    ProXL1 Async Teleinfo receive added
+
+FW release 433_1028 30-09-2018
+    LightwaveRF receive corrected
+    Imagintronix/Opus corrected
+    AB400 added in Pro1
+    TFA 30.3133/3156/3160 added
+    SelectPlus updated
+    Dutch P1 smart meter support added (ProXL1 only)
+
+FW release 433_1027 06-09-2018
+    Ambient Weather WS-14 pool sensor added
+    BWR102 added
+    Impuls added
+
+FW release 433_1026 18-08-2018
+    First Pro1 release

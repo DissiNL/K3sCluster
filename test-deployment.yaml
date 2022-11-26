@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dahuavto2mqtt
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: dahuavto2mqtt
+  template:
+    metadata:
+      labels:
+        name: dahuavto2mqtt
+    spec:
+      containers:
+        - name: dahuavto2mqtt
+          image: ghcr.io/butads/dahuavto2mqtt:latest
+          imagePullPolicy: "IfNotPresent"
+          env:
+          - name: DAHUA_VTO_HOST
+            value: vto-host
+          - name: DAHUA_VTO_USERNAME
+            value: username
+          - name: DAHUA_VTO_PASSWORD
+            value: password
+          - name: MQTT_BROKER_HOST
+            value: mqtt-host
+          - name: MQTT_BROKER_PORT
+            value: "1392"
+          - name: MQTT_BROKER_USERNAME
+            value: username
+          - name: MQTT_BROKER_PASSWORD
+            value: password
+          - name: MQTT_BROKER_TOPIC_PREFIX
+            value: DahuaVTO
+          - name: DEBUG
+            value: "False"
+      hostname: dahuavto2mqtt
+      restartPolicy: Always

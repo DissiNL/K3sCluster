@@ -1,0 +1,36 @@
+# https://artifacthub.io/packages/helm/k8s-at-home/lancache
+persistence:
+  logs:
+    enabled: true
+    mountPath: /data/logs
+    subPath: logs
+    accessMode: ReadWriteMany
+    size: 100m
+common:
+  persistence:
+    host-dev:
+      enabled: true
+      existingClaim: nas-cache
+      mountPath: /data/cache
+      subPath: cache
+env:
+  UPSTREAM_DNS: 8.8.8.8 4.4.4.4 1.1.1.1 1.0.0.1
+  CACHE_MEM_SIZE: 2000000m
+  CACHE_DISK_SIZE: 500m
+dnsConfig:
+  nameservers:
+    - 127.0.0.1
+dns:
+  env:
+    UPSTREAM_DNS: 8.8.8.8 4.4.4.4 1.1.1.1 1.0.0.1
+
+service:
+  main:
+    type: LoadBalancer
+    loadBalancerIP: 192.168.2.151
+    ports:
+      http:
+        port: 80
+      https:
+        enabled: true
+        port: 443

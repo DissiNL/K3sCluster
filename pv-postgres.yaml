@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nasbox-nfs-pv-postgress
+spec:
+  capacity:
+    storage: 1260Gi 
+  volumeMode: Filesystem
+  storageClassName: nfs-postgress
+  accessModes:
+    - ReadWriteMany 
+  persistentVolumeReclaimPolicy: Retain
+  mountOptions:
+    - hard
+  nfs: 
+    path: /volume3/containerstorage/home/postgress
+    server: 192.168.2.100
+    readOnly: false
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: nfs-postgress
+spec:
+  storageClassName: nfs-postgress
+  accessModes:
+    - "ReadWriteMany"
+  resources:
+    requests:
+      storage: "10Gi"

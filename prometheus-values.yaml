@@ -1,0 +1,24 @@
+prometheus:
+  prometheusSpec:
+    ruleSelector: {}
+    ruleNamespaceSelector: {}
+    ruleSelectorNilUsesHelmValues: false
+    serviceMonitorSelector: {}
+    serviceMonitorNamespaceSelector: {}
+    serviceMonitorSelectorNilUsesHelmValues: false
+    podMonitorSelector: {}
+    podMonitorNamespaceSelector: {}
+    podMonitorSelectorNilUsesHelmValues: false
+prometheus-node-exporter:
+  hostRootFsMount:
+    enabled: false
+
+# grafana.dissi.me
+
+grafana:
+  ingress: 
+    enabled: true
+    hosts: 
+      - grafana.dissi.me
+
+  adminPassword: # PW Manager

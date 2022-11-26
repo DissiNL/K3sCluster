@@ -1,0 +1,39 @@
+image:
+  # https://github.com/k8s-at-home/container-images/pkgs/container/plex
+  # 1.26.0.5715
+  docker pull ghcr.io/k8s-at-home/plex:
+  tag: v1.28.1.6104-788f82488
+  repository: ghcr.io/k8s-at-home/plex
+persistence:
+  config:
+    enabled: true
+    existingClaim: nas-config
+    mountPath: /config
+    subPath: plex
+common:
+  persistence:
+    host-dev:
+      enabled: true
+      existingClaim: nas-media
+      mountPath: /media
+ingress:
+  main:
+    enabled: true
+    hosts:
+      - host: plex.dissi.me
+        paths:
+        - path: /
+          pathType: Prefix
+
+env:
+  PLEX_CLAIM: # Get from https://www.plex.tv/claim/
+
+resources:
+  requests:
+    cpu: 2000m
+    memory: 4096Mi
+    gpu.intel.com/i915: 1
+  limits:
+    cpu: 8000m
+    memory: 6144Mi
+    gpu.intel.com/i915: 1

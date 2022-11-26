@@ -1,0 +1,46 @@
+# https://artifacthub.io/packages/helm/k8s-at-home/sabnzbd
+
+image:
+  tag: v3.5.0
+  repository: ghcr.io/k8s-at-home/sabnzbd
+
+persistence:
+  config:
+    enabled: true
+    existingClaim: nas-config
+    subPath: sabnzdb
+    skipuninstall: true
+  media:
+    enabled: true
+    existingClaim: nas-media
+    skipuninstall: true
+
+ingress:
+  main:
+    enabled: true  
+    hosts:
+      - host: sabnzbd.dissi.me
+        paths:
+        - path: /
+          pathType: Prefix
+
+affinity:
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/arch
+          operator: In
+          values:
+          - amd64
+          - arm64
+
+initContainers:
+  init-conatiner:
+    name: chown-init
+    image: busybox:latest
+    command: ["sh","-c","mkdir -p /config && chmod 777 -R /config"]
+    volumeMounts:
+    - name: config
+      mountPath: /config
+      subPath: sabnzbd

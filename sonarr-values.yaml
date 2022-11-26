@@ -1,0 +1,50 @@
+image:
+  # https://github.com/k8s-at-home/container-images/pkgs/container/sonarr
+  tag: v3.0.9.1549
+  repository: ghcr.io/k8s-at-home/sonarr
+
+persistence:
+  config:
+    enabled: true
+    existingClaim: nas-config
+    mountPath: /config
+    subPath: sonarr
+  media:
+    enabled: true
+    existingClaim: nas-media
+ingress:
+  main:
+    enabled: true  
+    hosts:
+      - host: tv.dissi.me
+        paths:
+        - path: /
+          pathType: Prefix
+initContainers:
+  chown:
+    image: busybox:latest
+    command: ["sh","-c","mkdir -p /config && chmod 777 -R /config"]
+    volumeMounts:
+    - name: config
+      mountPath: /config
+      subPath: sonarr
+
+resources:
+  requests:
+    cpu: 500m
+    memory: 1024Mi
+  limits:
+    cpu: 2000m
+    memory: 2048Mi
+
+
+affinity:
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/arch
+          operator: In
+          values:
+          - amd64
+          - arm64

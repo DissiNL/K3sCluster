@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: blackbox-nfs-pv-config-zigbee
+spec:
+  capacity:
+    storage: 1260Gi 
+  volumeMode: Filesystem
+  storageClassName: nfs-config-zigbee
+  accessModes:
+    - ReadWriteMany 
+  persistentVolumeReclaimPolicy: Retain
+  mountOptions:
+    - hard
+  nfs: 
+    path: /volume1/containerstorage
+    server: 192.168.2.8
+    readOnly: false
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: nas-config-zigbee
+  namespace: zigbee
+spec:
+  storageClassName: "nfs-config-zigbee"
+  volumeName: blackbox-nfs-pv-config-zigbee
+  accessModes:
+    - "ReadWriteMany"
+  resources:
+    requests:
+      storage: "10Gi"

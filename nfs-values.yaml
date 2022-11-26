@@ -1,0 +1,8 @@
+nfs:
+  server: 192.168.2.100
+  path: /volume3/containerstorage/provisioned 
+image.repository: quay.io/external_storage/nfs-client-provisioner-arm
+storageClass:
+  accessModes: ReadWriteMany
+  archiveOnDelete: true
+  defaultClass: true

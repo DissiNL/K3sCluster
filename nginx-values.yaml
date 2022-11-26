@@ -1,0 +1,26 @@
+controller:
+  metrics:
+    enabled: true
+    service:
+      annotations:
+        prometheus.io/port: "10254"
+        prometheus.io/scrape: "true"
+
+  service:
+    annotations:
+      prometheus.io/port: "10254"
+      prometheus.io/scrape: "true"
+
+  watchIngressWithoutClass: true
+  nodeSelector:
+    kubernetes.io/os: linux
+
+  # This section refers to the creation of the IngressClass resource
+  # IngressClass resources are supported since k8s >= 1.18 and required since k8s >= 1.19
+  ingressClassResource:
+    name: nginx
+    enabled: true
+    default: true
+    controllerValue: "k8s.io/ingress-nginx"
+tcp:
+  '1400': 'default/home-home-assistant-sonos:1400'

@@ -1,0 +1,68 @@
+# https://artifacthub.io/packages/helm/k8s-at-home/home-assistant
+mariadb:
+  enabled: false
+
+postgresql:
+  enabled: false
+
+influxdb:
+  enabled: false
+
+persistence:
+  config:
+    enabled: true
+    existingClaim: nas-config
+    mountPath: /config
+    subPath: home-assistant
+  rts:
+    enabled: true
+    type: hostPath
+    hostPath: /dev/ttyUSB0
+    medium: CharDevice
+ingress:
+  main:
+    enabled: true  
+    annotations:
+      nginx.org/websocket-services: home-home-assistant
+    hosts:
+      - host: connect.dissi.me
+        paths:
+        - path: /
+          pathType: Prefix
+
+affinity:
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: cluster.dissi.me/zwave
+          operator: In
+          values:
+          - "true"
+securityContext:
+  privileged: true
+# https://hub.docker.com/r/homeassistant/home-assistant/tags?page=1&ordering=last_updated
+image:
+  repository: homeassistant/home-assistant
+  tag: "2022.11"
+
+service:
+  main:
+    ports:
+      http:
+        port: 8123
+  weather:
+    enabled: true
+    type: NodePort
+    ports:
+      tcp:
+        enabled: true
+        port: 31000
+        nodePort: 31000
+  sonos:
+    enabled: true
+    ports:
+      sonos:
+        enabled: true
+        port: 1400
+        protocol: TCP

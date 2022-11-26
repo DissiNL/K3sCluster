@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    io.kompose.service: dahuavto2mqtt
+  name: dahuavto2mqtt
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: dahuavto2mqtt
+  template:
+    metadata:
+      labels:
+        name: dahuavto2mqtt
+    spec:
+      hostname: dahuavto2mqtt
+      restartPolicy: Always
+      containers:
+      - image: ghcr.io/butads/dahuavto2mqtt:v1.0.1
+        imagePullPolicy: "IfNotPresent"
+        name: dahuavto2mqtt
+        env:
+        - name: DAHUA_VTO_HOST
+          value: 192.168.2.52
+        - name: DAHUA_VTO_PASSWORD
+          value: # Get from PW manager
+        - name: DAHUA_VTO_USERNAME
+          value: admin
+        - name: DEBUG
+          value: "true"
+        - name: MQTT_BROKER_HOST
+          value: mosquitto
+        - name: MQTT_BROKER_PASSWORD
+          value: # Get from PW manager
+        - name: MQTT_BROKER_PORT
+          value: "1883"
+        - name: MQTT_BROKER_TOPIC_PREFIX
+          value: DahuaVTO
+        - name: MQTT_BROKER_USERNAME
+          value: mosquitto

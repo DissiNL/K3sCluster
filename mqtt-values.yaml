@@ -1,0 +1,37 @@
+image:
+  tag: 2.0.11
+  repository: ghcr.io/k8s-at-home/eclipse-mosquitto
+auth:
+  enabled: true
+
+ingress:
+  main:
+    enabled: false
+    hosts:
+      - host: mqtt.dissi.me
+        paths:
+        - path: /
+          pathType: Prefix
+
+persistence:
+  configinc:
+    enabled: true
+    existingClaim: nas-config
+    mountPath: /config
+    subPath: mqtt-conf
+  data:
+    enabled: true
+    existingClaim: nas-config
+    mountPath: /config
+    subPath: mqtt
+
+affinity:
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/arch
+          operator: In
+          values:
+          - amd64
+          - arm64
