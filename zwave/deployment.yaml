@@ -52,15 +52,15 @@ spec:
             allowPrivilegeEscalation: true
             privileged: true
           volumeMounts:
-            - mountPath: /dev/ttyUSB1
-              name: zwavehat
-            - mountPath: /usr/src/app/store
-              name: data
+            - mountPath: /dev/ttyUSB0
+              name: zwaveusb
+            - name: data
+              mountPath: /usr/src/app/store
+              subPath: zwave
       volumes:
-        - name: zwavehat
+        - name: zwaveusb
           hostPath:
-            path: /dev/ttyUSB1
-            type: CharDevice
+            path: /dev/ttyUSB0
         - name: data
-          hostPath:
-            path: /zwave/data
+          persistentVolumeClaim:
+            claimName: nas-config

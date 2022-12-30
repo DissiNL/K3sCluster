@@ -128,29 +128,19 @@ helm install nfs-subdir-external-provisioner nfs-subdir-external-provisioner/nfs
 Any other host:
 ```bash
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
-helm repo add k8s-at-home https://k8s-at-home.com/charts/
-helm install ingress-nginx ingress-nginx/ingress-nginx --version 4.0.13 --namespace ingress-nginx -f nginx-values.yaml
 helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx/
-helm install sonarr k8s-at-home/sonarr --version 14.0.0 -f sonarr-values.yaml
-helm install radarr k8s-at-home/radarr --version 14.0.0 -f radarr-values.yaml
-helm install sabnzbd k8s-at-home/sabnzbd --version 8.1.0 -f sabnzbd-values.yaml
-helm install plex k8s-at-home/plex --version 6.0.1 -f plex-values.yaml
-helm install home k8s-at-home/home-assistant --version 9.3.1 -f home-values.yaml
-helm install mosquitto k8s-at-home/mosquitto --version 4.0.1 -f mqtt-values.yaml
-helm install pihole mojo2600/pihole --version 2.5.8 --namespace pihole -f pihole-values.yaml
-helm install lancache k8s-at-home/lancache -f values.yaml -n lancache
 
 helm upgrade ingress-nginx ingress-nginx/ingress-nginx --namespace ingress-nginx -f nginx-values.yaml --set controller.metrics.enabled=true --set controller.metrics.serviceMonitor.enabled=true --set controller.metrics.serviceMonitor.additionalLabels.release="prometheus"
 
-helm upgrade mosquitto k8s-at-home/mosquitto --version 4.2.0 -f mqtt-values.yaml
-helm upgrade sonarr k8s-at-home/sonarr --version 14.0.0 -f sonarr-values.yaml
-helm upgrade radarr k8s-at-home/radarr --version 14.0.0 -f radarr-values.yaml
-helm upgrade sabnzdb k8s-at-home/sabnzbd --version 9.4.2 -f sabnzbd-values.yaml
-helm upgrade plex k8s-at-home/plex --version 6.0.1 -f plex-values.yaml
-helm upgrade home k8s-at-home/home-assistant --version 13.4.2 -f home-values.yaml
-helm upgrade pihole mojo2600/pihole --version 2.5.8 --namespace pihole -f pihole-values.yaml
-helm upgrade lancache k8s-at-home/lancache -f values.yaml -n lancache
-helm upgrade --namespace monitoring --install kube-stack-prometheus prometheus-community/kube-prometheus-stack -f prometheus-values.yaml
+helm upgrade sonarr ./charts/helm/sonarr-16.3.2.tgz -f sonarr-values.yaml --install
+helm upgrade radarr ./charts/helm/radarr-16.3.2.tgz -f radarr-values.yaml --install
+helm upgrade sabnzbd ./charts/helm/sabnzbd-9.4.2.tgz --version 9.4.2 -f sabnzbd-values.yaml --install
+helm upgrade plex ./charts/helm/plex-6.4.3.tgz -f plex-values.yaml --install
+helm upgrade home ./charts/helm/home-assistant-13.4.2.tgz -f home-values.yaml --install
+helm upgrade lancache ./charts/helm/lancache-0.6.2.tgz -f lancache/values.yaml -n lancache --install
+
+helm upgrade pihole mojo2600/pihole --version 2.5.8 --namespace pihole -f pihole-values.yaml --install
+helm upgrade --namespace monitoring --install kube-stack-prometheus prometheus-community/kube-prometheus-stack -f prometheus-values.yaml --install
 
 
 ```
@@ -161,7 +151,7 @@ Use the default lite image
 ```bash
 # zwave
 kubectl label nodes rasnode02 kubernetes.io/role=worker
-kubectl label nodes rasnode02 cluster.dissi.me/zwave=true
+kubectl label nodes rasnode03 cluster.dissi.me/zwave=true
 kubectl label nodes rasnode02 cluster.dissi.me/zigbee=true
 
 ```
@@ -221,4 +211,13 @@ https://blog.xirion.net/posts/metallb-opnsense/
 helm repo add metallb https://metallb.github.io/metallb
 helm install metallb metallb/metallb --version 0.12.1 -n metallb-system
 
+```
+
+
+# Ingress setup
+
+
+```shell
+helm repo add external-dns https://kubernetes-sigs.github.io/external-dns/
+helm upgrade --install external-dns external-dns/external-dns --namespace external-dns -f dns/values.yaml
 ```

@@ -28,3 +28,37 @@ spec:
   resources:
     requests:
       storage: "10Gi"
+
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nasbox-nfs-pv-config-zwave
+spec:
+  capacity:
+    storage: 1260Gi 
+  volumeMode: Filesystem
+  storageClassName: nfs-config
+  accessModes:
+    - ReadWriteMany 
+  persistentVolumeReclaimPolicy: Retain
+  mountOptions:
+    - vers=4
+  nfs: 
+    path: /volume3/containerstorage
+    server: 192.168.2.100
+    readOnly: false
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: nas-config
+  namespace: zwave
+spec:
+  storageClassName: nfs-config
+  accessModes:
+    - "ReadWriteMany"
+  resources:
+    requests:
+      storage: "10Gi"
+  volumeName: nasbox-nfs-pv-config-zwave

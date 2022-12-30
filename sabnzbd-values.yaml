@@ -1,8 +1,7 @@
-# https://artifacthub.io/packages/helm/k8s-at-home/sabnzbd
-
+# https://hub.docker.com/r/linuxserver/sabnzbd
 image:
-  tag: v3.5.0
-  repository: ghcr.io/k8s-at-home/sabnzbd
+  tag: latest
+  repository: lscr.io/linuxserver/sabnzbd
 
 persistence:
   config:
@@ -17,7 +16,15 @@ persistence:
 
 ingress:
   main:
-    enabled: true  
+    enabled: true
+    annotations: 
+      cert-manager.io/cluster-issuer: letsencrypt-prod
+      nginx.ingress.kubernetes.io/whitelist-source-range: "192.168.2.0/23,10.100.0.0/24"
+      external-dns.alpha.kubernetes.io/target: 86.84.170.207
+    tls: 
+      - secretName: sabnzdb-letsencrypt-prod
+        hosts:
+        - sabnzbd.dissi.me
     hosts:
       - host: sabnzbd.dissi.me
         paths:
@@ -34,13 +41,3 @@ affinity:
           values:
           - amd64
           - arm64
-
-initContainers:
-  init-conatiner:
-    name: chown-init
-    image: busybox:latest
-    command: ["sh","-c","mkdir -p /config && chmod 777 -R /config"]
-    volumeMounts:
-    - name: config
-      mountPath: /config
-      subPath: sabnzbd

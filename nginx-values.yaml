@@ -1,4 +1,5 @@
 controller:
+
   metrics:
     enabled: true
     service:
@@ -7,13 +8,14 @@ controller:
         prometheus.io/scrape: "true"
 
   service:
+    externalTrafficPolicy: Local
     annotations:
       prometheus.io/port: "10254"
       prometheus.io/scrape: "true"
 
   watchIngressWithoutClass: true
   nodeSelector:
-    kubernetes.io/os: linux
+    kubernetes.io/hostname: rasnode03
 
   # This section refers to the creation of the IngressClass resource
   # IngressClass resources are supported since k8s >= 1.18 and required since k8s >= 1.19

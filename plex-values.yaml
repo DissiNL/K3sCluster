@@ -1,9 +1,7 @@
 image:
-  # https://github.com/k8s-at-home/container-images/pkgs/container/plex
-  # 1.26.0.5715
-  docker pull ghcr.io/k8s-at-home/plex:
-  tag: v1.28.1.6104-788f82488
-  repository: ghcr.io/k8s-at-home/plex
+  # https://github.com/linuxserver/docker-plex
+  tag: latest
+  repository: lscr.io/linuxserver/plex
 persistence:
   config:
     enabled: true
@@ -19,6 +17,13 @@ common:
 ingress:
   main:
     enabled: true
+    annotations: 
+      cert-manager.io/cluster-issuer: letsencrypt-prod
+      external-dns.alpha.kubernetes.io/target: 86.84.170.207
+    tls: 
+      - secretName: plex-letsencrypt-prod
+        hosts:
+        - plex.dissi.me
     hosts:
       - host: plex.dissi.me
         paths:
@@ -27,6 +32,7 @@ ingress:
 
 env:
   PLEX_CLAIM: # Get from https://www.plex.tv/claim/
+  VERSION: docker
 
 resources:
   requests:

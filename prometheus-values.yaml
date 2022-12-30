@@ -18,6 +18,13 @@ prometheus-node-exporter:
 grafana:
   ingress: 
     enabled: true
+    annotations: 
+      cert-manager.io/cluster-issuer: letsencrypt-prod
+      nginx.ingress.kubernetes.io/whitelist-source-range: "192.168.2.0/23,10.100.0.0/24"
+    tls: 
+      - secretName: grafana-letsencrypt-prod
+        hosts:
+        - grafana.dissi.me
     hosts: 
       - grafana.dissi.me
 
