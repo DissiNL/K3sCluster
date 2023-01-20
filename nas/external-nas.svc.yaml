@@ -31,3 +31,28 @@ spec:
               name: dissi-nasbox
               port:
                 number: 5000
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: homelinks
+  namespace: nas
+  annotations: 
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    external-dns.alpha.kubernetes.io/target: 86.84.170.207
+spec:
+  tls:
+  - secretName: links-letsencrypt-prod
+    hosts:
+    - dissi.me
+  rules:
+  - host: dissi.me
+    http:
+      paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: dissi-nasbox
+              port:
+                number: 5002
