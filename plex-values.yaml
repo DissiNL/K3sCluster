@@ -18,8 +18,11 @@ ingress:
   main:
     enabled: true
     annotations: 
+      nginx.org/proxy-send-timeout: 120m
       cert-manager.io/cluster-issuer: letsencrypt-prod
       external-dns.alpha.kubernetes.io/target: 86.84.170.207
+      nginx.ingress.kubernetes.io/proxy-buffering: "off"
+      nginx.org/websocket-services: plex
     tls: 
       - secretName: plex-letsencrypt-prod
         hosts:

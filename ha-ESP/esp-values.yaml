@@ -1,0 +1,37 @@
+image:
+  # https://github.com/esphome/esphome/pkgs/container/esphome-hassio
+  tag: stable
+  repository: ghcr.io/esphome/esphome
+
+hostNetwork: true
+dnsPolicy: ClusterFirstWithHostNet
+persistence:
+  config:
+    enabled: true
+    existingClaim: nas-config
+    mountPath: /config
+    subPath: esphome
+ingress:
+  main:
+    enabled: true
+    annotations: 
+      cert-manager.io/cluster-issuer: letsencrypt-prod
+      nginx.ingress.kubernetes.io/whitelist-source-range: "192.168.2.0/22"
+      external-dns.alpha.kubernetes.io/target: 86.84.170.207
+    tls: 
+      - secretName: esphome-letsencrypt-prod
+        hosts:
+        - esphome.dissi.me
+    hosts:
+      - host: esphome.dissi.me
+        paths:
+        - path: /
+          pathType: Prefix
+env:
+  USERNAME: #
+  PASSWORD: #
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 128Mi

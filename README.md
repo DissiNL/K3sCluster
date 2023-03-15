@@ -132,6 +132,8 @@ helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx/
 
 helm upgrade ingress-nginx ingress-nginx/ingress-nginx --namespace ingress-nginx -f nginx-values.yaml --set controller.metrics.enabled=true --set controller.metrics.serviceMonitor.enabled=true --set controller.metrics.serviceMonitor.additionalLabels.release="prometheus"
 
+
+helm upgrade esphome --namespace esphome ./ha-ESP/esphome-8.4.2.tgz -f ./ha-ESP/esp-values.yaml --install
 helm upgrade sonarr ./charts/helm/sonarr-16.3.2.tgz -f sonarr-values.yaml --install
 helm upgrade radarr ./charts/helm/radarr-16.3.2.tgz -f radarr-values.yaml --install
 helm upgrade sabnzbd ./charts/helm/sabnzbd-9.4.2.tgz --version 9.4.2 -f sabnzbd-values.yaml --install

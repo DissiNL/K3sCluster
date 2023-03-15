@@ -1,7 +1,7 @@
 # https://hub.docker.com/r/homeassistant/home-assistant/tags?page=1&ordering=last_updated
 image:
   repository: homeassistant/home-assistant
-  tag: "2023.1"
+  tag: "2023.3"
 
 mariadb:
   enabled: false
@@ -39,7 +39,8 @@ affinity:
           - "true"
 securityContext:
   privileged: true
-
+hostNetwork: true
+dnsPolicy: ClusterFirstWithHostNet
 persistence:
   config:
     enabled: true
@@ -54,6 +55,7 @@ persistence:
 
 service:
   main:
+    hostNetwork: true
     ports:
       http:
         port: 8123
