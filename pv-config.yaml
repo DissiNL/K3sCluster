@@ -96,20 +96,6 @@ spec:
       storage: "10Gi"
   volumeName: nasbox-nfs-pv-config-esphome
 ---
-kind: PersistentVolumeClaim
-apiVersion: v1
-metadata:
-  name: nas-config
-  namespace: download
-spec:
-  storageClassName: nfs-config
-  accessModes:
-    - "ReadWriteMany"
-  resources:
-    requests:
-      storage: "10Gi"
-  volumeName: nasbox-nfs-pv-config-download
----
 apiVersion: v1
 kind: PersistentVolume
 metadata:
@@ -128,3 +114,17 @@ spec:
     path: /volume3/containerstorage
     server: 192.168.2.100
     readOnly: false
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: nas-config
+  namespace: download
+spec:
+  storageClassName: nfs-config
+  accessModes:
+    - "ReadWriteMany"
+  resources:
+    requests:
+      storage: "10Gi"
+  volumeName: nasbox-nfs-pv-config-download
