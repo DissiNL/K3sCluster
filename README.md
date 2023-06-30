@@ -137,6 +137,8 @@ helm upgrade esphome --namespace esphome ./ha-ESP/esphome-8.4.2.tgz -f ./ha-ESP/
 helm upgrade sonarr --namespace download ./charts/helm/sonarr-16.3.2.tgz -f sonarr-values.yaml --install
 helm upgrade radarr --namespace download ./charts/helm/radarr-16.3.2.tgz -f radarr-values.yaml --install
 helm upgrade sabnzbd --namespace download ./charts/helm/sabnzbd-9.4.2.tgz --version 9.4.2 -f sabnzbd-values.yaml --install
+helm upgrade bazarr --namespace download ./charts/helm/bazarr-11.1.1.tgz -f bazarr-values.yaml --install
+
 helm upgrade plex ./charts/helm/plex-6.4.3.tgz -f plex-values.yaml --install
 helm upgrade home ./charts/helm/home-assistant-13.4.2.tgz -f home-values.yaml --install
 helm upgrade lancache ./charts/helm/lancache-0.6.2.tgz -f lancache/values.yaml -n lancache --install

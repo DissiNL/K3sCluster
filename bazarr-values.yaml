@@ -1,0 +1,36 @@
+image:
+  # https://docs.linuxserver.io/images/docker-bazarr
+  tag: latest
+  repository: lscr.io/linuxserver/bazarr
+persistence:
+  config:
+    enabled: true
+    existingClaim: nas-config
+    mountPath: /config
+    subPath: bazarr
+common:
+  persistence:
+    host-dev:
+      enabled: true
+      existingClaim: nas-media
+      mountPath: /media
+ingress:
+  main:
+    enabled: true
+    annotations: 
+      nginx.org/proxy-send-timeout: 120m
+      cert-manager.io/cluster-issuer: letsencrypt-prod
+      external-dns.alpha.kubernetes.io/target: 86.84.170.207
+      nginx.ingress.kubernetes.io/whitelist-source-range: "192.168.2.0/22,10.100.0.0/24"
+      nginx.ingress.kubernetes.io/proxy-read-timeout: "120"
+      nginx.ingress.kubernetes.io/proxy-send-timeout: "120"
+      nginx.ingress.kubernetes.io/proxy-buffering: "off"
+    tls: 
+      - secretName: bazarr-letsencrypt-prod
+        hosts:
+        - bazarr.dissi.me
+    hosts:
+      - host: bazarr.dissi.me
+        paths:
+        - path: /
+          pathType: Prefix

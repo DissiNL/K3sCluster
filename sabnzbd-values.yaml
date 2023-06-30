@@ -19,7 +19,7 @@ ingress:
     enabled: true
     annotations: 
       cert-manager.io/cluster-issuer: letsencrypt-prod
-      nginx.ingress.kubernetes.io/whitelist-source-range: "192.168.2.0/23,10.100.0.0/24"
+      nginx.ingress.kubernetes.io/whitelist-source-range: "192.168.2.0/22,10.100.0.0/24"
       external-dns.alpha.kubernetes.io/target: 86.84.170.207
     tls: 
       - secretName: sabnzdb-letsencrypt-prod
@@ -30,14 +30,3 @@ ingress:
         paths:
         - path: /
           pathType: Prefix
-
-affinity:
-  nodeAffinity:
-    requiredDuringSchedulingIgnoredDuringExecution:
-      nodeSelectorTerms:
-      - matchExpressions:
-        - key: kubernetes.io/arch
-          operator: In
-          values:
-          - amd64
-          - arm64

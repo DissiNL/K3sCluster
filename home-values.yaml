@@ -2,6 +2,7 @@
 image:
   repository: homeassistant/home-assistant
   tag: "2023.6"
+  pullPolicy: Always
 
 mariadb:
   enabled: false
