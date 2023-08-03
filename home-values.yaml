@@ -1,7 +1,7 @@
-# https://hub.docker.com/r/homeassistant/home-assistant/tags?page=1&ordering=last_updated
+# https://github.com/home-assistant/core/pkgs/container/home-assistant
 image:
-  repository: homeassistant/home-assistant
-  tag: "2023.6"
+  repository: ghcr.io/home-assistant/home-assistant
+  tag: "2023.8"
   pullPolicy: Always
 
 mariadb:
