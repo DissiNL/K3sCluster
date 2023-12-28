@@ -14,7 +14,7 @@ metadata:
   namespace: nas
   annotations: 
     cert-manager.io/cluster-issuer: letsencrypt-prod
-    external-dns.alpha.kubernetes.io/target: 86.84.170.207
+    external-dns.alpha.kubernetes.io/target: 86.82.75.36
     nginx.ingress.kubernetes.io/proxy-body-size: 50g
 spec:
   tls:
@@ -40,7 +40,7 @@ metadata:
   namespace: nas
   annotations: 
     cert-manager.io/cluster-issuer: letsencrypt-prod
-    external-dns.alpha.kubernetes.io/target: 86.84.170.207
+    external-dns.alpha.kubernetes.io/target: 86.82.75.36
     nginx.ingress.kubernetes.io/proxy-body-size: 50g
 spec:
   tls:
@@ -66,7 +66,7 @@ metadata:
   namespace: nas
   annotations: 
     cert-manager.io/cluster-issuer: letsencrypt-prod
-    external-dns.alpha.kubernetes.io/target: 86.84.170.207
+    external-dns.alpha.kubernetes.io/target: 86.82.75.36
 spec:
   tls:
   - secretName: links-letsencrypt-prod
@@ -83,3 +83,28 @@ spec:
               name: dissi-nasbox
               port:
                 number: 5002
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: halloween
+  namespace: nas
+  annotations: 
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    external-dns.alpha.kubernetes.io/target: 86.82.75.36
+spec:
+  tls:
+  - secretName: halloween-letsencrypt-prod
+    hosts:
+    - halloween.dissi.me
+  rules:
+  - host: halloween.dissi.me
+    http:
+      paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: dissi-nasbox
+              port:
+                number: 5003

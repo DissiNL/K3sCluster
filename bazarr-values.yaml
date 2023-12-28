@@ -20,12 +20,9 @@ ingress:
     annotations: 
       nginx.org/proxy-send-timeout: 120m
       cert-manager.io/cluster-issuer: letsencrypt-prod
-      external-dns.alpha.kubernetes.io/target: 86.84.170.207
+      external-dns.alpha.kubernetes.io/target: 86.82.75.36
       nginx.ingress.kubernetes.io/whitelist-source-range: "192.168.2.0/22,10.100.0.0/24"
-      nginx.ingress.kubernetes.io/proxy-read-timeout: "120"
-      nginx.ingress.kubernetes.io/proxy-send-timeout: "120"
-      nginx.ingress.kubernetes.io/proxy-buffering: "off"
-    tls: 
+    tls:
       - secretName: bazarr-letsencrypt-prod
         hosts:
         - bazarr.dissi.me
